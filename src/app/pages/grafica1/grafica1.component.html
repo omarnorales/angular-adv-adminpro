@@ -1,1 +1,22 @@
-<p>grafica1 works!</p>
+<div class="row">
+    <div class="col-6">
+
+        <app-dona [p_title]="titleGrafica1" [p_labelsGrafica]="labelsGrafica1" [p_chartData]="chartData"></app-dona>
+
+    </div>
+
+    <div class="col-6">
+        <app-dona p_title="Grafica #2"></app-dona>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <app-dona p_title="Grafica #3"></app-dona>
+    </div>
+    <div class="col-6">
+
+        <app-dona p_title="Grafica #4" [p_labelsGrafica]="labelsGrafica1" [p_chartData]="chartData"></app-dona>
+
+    </div>
+</div>
