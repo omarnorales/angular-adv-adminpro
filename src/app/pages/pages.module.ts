@@ -13,6 +13,8 @@ import { ProgressComponent } from './progress/progress.component';
 import { PagesComponent } from './pages.component';
 import { RouterModule } from '@angular/router';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
+import { PromesasComponent } from './promesas/promesas.component';
+import { RxjsComponent } from './rxjs/rxjs.component';
 
 
 
@@ -24,6 +26,8 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
     Grafica1Component,
     ProgressComponent,
     AccountSettingsComponent,
+    PromesasComponent,
+    RxjsComponent,
   ],
   imports: [
     CommonModule,
@@ -38,7 +42,9 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
     DashboardComponent,
     Grafica1Component,
     ProgressComponent,
-    AccountSettingsComponent
+    AccountSettingsComponent,
+    PromesasComponent,
+    RxjsComponent
   ]
 })
 export class PagesModule { }
