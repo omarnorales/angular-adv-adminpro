@@ -7,6 +7,7 @@ import { catchError, map, retry, tap } from 'rxjs/operators'
 import { environment } from 'src/environments/environment';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { RegisterForm } from '../interfaces/register-form.interface';
+import { User } from '../models/user.model';
 
 const base_url = environment.base_url;
 declare const gapi: any;
@@ -17,12 +18,21 @@ declare const gapi: any;
 export class UserService {
 
   public auth2: any;
+  public user: User;
 
   constructor( private http: HttpClient,
               private router: Router,
               private ngZone: NgZone) { 
     
                 this.googleInit();
+  }
+
+  get token(): string{
+    return localStorage.getItem('token') || '';
+  }
+
+  get uid(): string{
+    return this.user.uid || '';
   }
 
   googleInit() {
@@ -54,18 +64,23 @@ export class UserService {
   }
 
   validarToken(): Observable<boolean> {
-    const token = localStorage.getItem('token') || '';
 
     return this.http.get(`${base_url}/login/renew`,{
       headers: { 
-        'x-token': token,
+        'x-token': this.token,
       }
     }).pipe(
-      tap( (resp: any) => {
+      map( (resp: any) => {
+        
+        const {email,google,name,role,img = '',uid} = resp.user;
+        this.user = new User(name, email,'', img, google,role, uid);
         localStorage.setItem('token', resp.token);
+        return true; //if token is generated
       }),
-      map( resp => true), //if token is generated
-      catchError( error => of(false) ) // else return false
+      catchError( error => {
+        console.log(error);
+        return of(false)
+      } ) // else return false
     );
   }
 
@@ -78,6 +93,20 @@ export class UserService {
                   localStorage.setItem('token', resp.token);
                 })
               )
+  }
+
+  updateProfile( data: {email: string, name: string, role: string} ){
+
+    data = {
+      ...data,
+      role: this.user.role
+    };
+
+    return this.http.put(`${base_url}/users/${this.uid}`, data, {
+      headers: { 
+        'x-token': this.token,
+      }
+    })
   }
 
   login( formData: LoginForm ){
