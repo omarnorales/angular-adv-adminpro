@@ -16,6 +16,9 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './maintenances/users/users.component';
+import { DoctorsComponent } from './maintenances/doctors/doctors.component';
+import { HospitalsComponent } from './maintenances/hospitals/hospitals.component';
 
 
 
@@ -30,6 +33,9 @@ import { ProfileComponent } from './profile/profile.component';
     PromesasComponent,
     RxjsComponent,
     ProfileComponent,
+    UsersComponent,
+    DoctorsComponent,
+    HospitalsComponent,
   ],
   imports: [
     CommonModule,

@@ -18,6 +18,16 @@ export class SidebarService {
         { title: 'RXJS', url: 'rxjs'},
         // { titulo: 'Account Setting', url: '/account-settings' },
       ]
+    },
+
+    { 
+      title: 'Maintenance' ,
+      icon: 'mdi mdi-folder-lock-open',
+      subMenu: [
+        { title: 'Users', url: 'users' },
+        { title: 'Hospitals', url: 'hospitals' },
+        { title: 'Doctors', url: 'doctors' },
+      ]
     }
   ];
 

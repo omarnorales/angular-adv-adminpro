@@ -18,7 +18,7 @@ export class FileUploadService {
     try {
       
       const url = `${base_user}/upload/${type}/${id}`;
-
+      console.log('upload url:', url);
       const formData = new FormData();
       formData.append('image', file);
 

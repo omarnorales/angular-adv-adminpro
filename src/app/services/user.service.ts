@@ -4,9 +4,14 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map, retry, tap } from 'rxjs/operators'
 
+// enviroment
 import { environment } from 'src/environments/environment';
+
+// Interfaces
+import { GetUser } from '../interfaces/get-user.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { RegisterForm } from '../interfaces/register-form.interface';
+
 import { User } from '../models/user.model';
 
 const base_url = environment.base_url;
@@ -33,6 +38,14 @@ export class UserService {
 
   get uid(): string{
     return this.user.uid || '';
+  }
+
+  get headers(){
+    return {
+      headers: { 
+        'x-token': this.token,
+      }
+    }
   }
 
   googleInit() {
@@ -102,11 +115,7 @@ export class UserService {
       role: this.user.role
     };
 
-    return this.http.put(`${base_url}/users/${this.uid}`, data, {
-      headers: { 
-        'x-token': this.token,
-      }
-    })
+    return this.http.put(`${base_url}/users/${this.uid}`, data, this.headers)
   }
 
   login( formData: LoginForm ){
@@ -129,5 +138,34 @@ export class UserService {
                   localStorage.setItem('token', resp.token);
                 })
               )
+  }
+
+  getUsers( from: number = 0 ) {
+    // http://localhost:3005/api/users?from=0
+    const url = `${base_url}/users?from=${from}`;
+    return this.http.get<GetUser>(url,this.headers)
+    .pipe(
+      map( (response: any) =>{
+        
+        const users = response.users.map( 
+          user => new User(user.name, user.email, '', user.img, user.google, user.role, user.uid)
+          );
+          
+        return {
+          total: response.total,
+          users
+        };
+      })
+    )
+  }
+
+  deleteUser( user: User){
+    const url = `${base_url}/users/${user.uid}`;
+    return this.http.delete(url,this.headers);
+  }
+
+  saveUser( user: User){
+
+    return this.http.put(`${base_url}/users/${user.uid}`, user, this.headers);
   }
 }

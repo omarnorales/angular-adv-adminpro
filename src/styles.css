@@ -21,3 +21,31 @@
     width: 150px;
     height: 150px;
 }
+
+.w100 {
+    width: 100px;
+}
+
+.w140 {
+    width: 140px;
+}
+
+.avatar {
+    width: 30px;
+    border-radius: 100%;
+    border: 1px solid gray;
+}
+
+.background-modal-image {
+    background-color: rgba(0, 0, 0, 0.4);
+    height: 100%;
+    left: 0px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 9999;
+}
+
+.hidden {
+    display: none;
+}

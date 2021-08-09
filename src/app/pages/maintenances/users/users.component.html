@@ -1,0 +1,91 @@
+<div class="row animated fadeIn fast">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+
+                <input type="text" class="form-control" placeholder="Search user..." (keyup)="search(txtTerm.value)" #txtTerm>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="loading" class="row animated fadeIn fast">
+    <div class="col">
+        <div class="alert alert-info text-center" role="alert">
+            <h4 class="alert-heading">
+                Loading
+            </h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Please wait</p>
+
+        </div>
+    </div>
+</div>
+
+<div *ngIf="!loading" class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Total Users: {{this.totalUsers}}</h4>
+                <h6 class="card-subtitle">Application users</h6>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="w100">Avatar</th>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th class="w140">Role</th>
+                                <th class="w100">Auth</th>
+                                <th class="text-nowrap w100">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let user of users">
+                                <td (click)="openModal(user)" class="text-center">
+                                    <img [src]="user.imageUrl" alt="User Avatar" class="avatar cursor">
+                                </td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>
+                                    <select class="form-control" [(ngModel)]="user.role" (change)="changeRole(user)">
+                                        <option value="ADMIN_ROLE">Admin</option>
+                                        <option value="USER_ROLE">User</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <span *ngIf="user.google" class="label label-danger">Google</span>
+                                    <span *ngIf="!user.google" class="label label-info">Email</span>
+                                </td>
+
+                                <td class="text-nowrap text-center">
+                                    <!-- <a (click)="modifyUser(user.uid)" data-toggle="tooltip" data-original-title="Edit">
+                                        <i class="fa fa-pencil text-inverse m-r-10 cursor"></i>
+                                    </a> -->
+                                    <a (click)="deleteUser(user)" data-toggle="tooltip" data-original-title="Remove">
+                                        <i class="fa fa-close text-danger cursor"></i>
+                                    </a>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div *ngIf="txtTerm.value.length === 0">
+
+                    <button (click)="changePage(-5)" class="btn btn-secondary" [disabled]="!previosButtonEnable">
+                        <i class="fa fa-arrow-left"></i>
+                        Previous
+                    </button> &nbsp;
+                    <button (click)="changePage(5)" class="btn btn-secondary" [disabled]="!nextButtonEnable">
+                        Next
+                        <i class="fa fa-arrow-right"></i>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

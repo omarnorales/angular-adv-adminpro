@@ -10,6 +10,9 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 
 import { AuthGuard } from '../guards/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
+import { UsersComponent } from './maintenances/users/users.component';
+import { DoctorsComponent } from './maintenances/doctors/doctors.component';
+import { HospitalsComponent } from './maintenances/hospitals/hospitals.component';
 
 
 const routes: Routes = [
@@ -26,6 +29,11 @@ const routes: Routes = [
           { path: 'promesas', component: PromesasComponent, data: {title: 'Promises'}},
           { path: 'rxjs', component: RxjsComponent, data: {title: 'JXRS Observables'}},
           { path: 'profile', component: ProfileComponent, data: {title: 'Profile'}},
+
+          // maintenances
+          { path: 'users', component: UsersComponent, data: {title: 'Users'}},
+          { path: 'hospitals', component: HospitalsComponent, data: {title: 'Hospitals'}},
+          { path: 'doctors', component: DoctorsComponent, data: {title: 'Doctors'}},
           
         ]
       },
