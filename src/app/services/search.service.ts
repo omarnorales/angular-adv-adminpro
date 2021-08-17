@@ -4,6 +4,8 @@ import { User } from '../models/user.model';
 import { environment } from 'src/environments/environment';
 import { GetUser } from '../interfaces/get-user.interface';
 import { map } from 'rxjs/operators';
+import { Hospital } from '../models/hospital.model';
+import { Doctor } from '../models/doctor.model';
 
 const base_url = environment.base_url;
 
@@ -32,7 +34,7 @@ export class SearchService {
     }
   }
 
-  convertToUser( resp: any ): User[] {
+  convertToUser( resp: any[] ): User[] {
     
     //console.log(resp.results);
    return resp.map(
@@ -40,6 +42,14 @@ export class SearchService {
         return new User(user.name, user.email, '', user.img, user.google, user.role, user.uid)
       }
     );
+  }
+
+  convertToHospital( resp: any[] ): Hospital[] {
+   return resp;
+  }
+
+  convertToDoctor( resp: any[] ): Doctor[] {
+    return resp;
   }
 
   search(
@@ -55,7 +65,12 @@ export class SearchService {
                   case 'users':
                     return this.convertToUser(resp.results)
                     break;
-
+                  case 'hospitals':
+                      return this.convertToHospital(resp.results)
+                      break;
+                  case 'doctors':
+                      return this.convertToDoctor(resp.results)
+                      break;
                   default:
                     return[];
                 }

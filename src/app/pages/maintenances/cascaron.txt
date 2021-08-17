@@ -49,7 +49,7 @@
                                 <td>Lunar probe project</td>
                                 <td>Lunar probe project</td>
 
-                                <td class="text-nowrap">
+                                <td class="text-nowrap text-center">
                                     <a href="#" data-toggle="tooltip" data-original-title="Edit"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a>
                                     <a href="#" data-toggle="tooltip" data-original-title="Remove"> <i class="fa fa-close text-danger"></i> </a>
                                 </td>
@@ -59,8 +59,14 @@
                     </table>
                 </div>
 
-                <button class="btn btn-secondary">Previous</button> &nbsp;
-                <button class="btn btn-secondary">Next</button>
+                <button class="btn btn-secondary">
+                    <i class="fa fa-arrow-left"></i>
+                    Previous
+                </button> &nbsp;
+                <button class="btn btn-secondary">
+                    Next
+                    <i class="fa fa-arrow-right"></i>
+                </button>
             </div>
         </div>
     </div>
