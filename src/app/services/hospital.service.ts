@@ -30,7 +30,7 @@ export class HospitalService {
   getHospitals(){
     // http://localhost:3005/api/hospitals/
 
-    const url = `${base_url}/hospitals`;
+    const url = `${base_url}/hospitals/`;
     return this.http.get(url,this.headers)
     .pipe(
       map( (response:{ok: boolean, hospitals: Hospital[]}) => response.hospitals)

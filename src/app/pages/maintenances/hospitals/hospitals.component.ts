@@ -43,7 +43,7 @@ export class HospitalsComponent implements OnInit, OnDestroy{
   loadHospitals(){
     this.loading = true;
     this.hospitalService.getHospitals()
-    .subscribe( hospitals => {
+    .subscribe( (hospitals: any) => {
       
       this.hospitals = hospitals;
       this.hospitalsTemp = this.hospitals;

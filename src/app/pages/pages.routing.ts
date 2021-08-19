@@ -14,6 +14,8 @@ import { UsersComponent } from './maintenances/users/users.component';
 import { DoctorsComponent } from './maintenances/doctors/doctors.component';
 import { HospitalsComponent } from './maintenances/hospitals/hospitals.component';
 import { DoctorComponent } from './maintenances/doctors/doctor.component';
+import { SearchComponent } from './search/search.component';
+import { AdminGuard } from '../guards/admin.guard';
 
 
 const routes: Routes = [
@@ -30,12 +32,15 @@ const routes: Routes = [
           { path: 'promesas', component: PromesasComponent, data: {title: 'Promises'}},
           { path: 'rxjs', component: RxjsComponent, data: {title: 'JXRS Observables'}},
           { path: 'profile', component: ProfileComponent, data: {title: 'Profile'}},
+          { path: 'search/:term', component: SearchComponent, data: {title: 'Search'}},
 
           // maintenances
-          { path: 'users', component: UsersComponent, data: {title: 'Users'}},
           { path: 'hospitals', component: HospitalsComponent, data: {title: 'Hospitals'}},
           { path: 'doctors', component: DoctorsComponent, data: {title: 'Doctors'}},
           { path: 'doctor/:id', component: DoctorComponent, data: {title: 'Doctor'}},
+          
+          // Rutas de admin
+          { path: 'users', canActivate:[ AdminGuard ] , component: UsersComponent, data: {title: 'Users'}},
           
         ]
       },

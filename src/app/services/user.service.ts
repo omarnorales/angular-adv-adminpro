@@ -36,6 +36,10 @@ export class UserService {
     return localStorage.getItem('token') || '';
   }
 
+  get role(): 'ADMIN_ROLE'|'USER_ROLE'{
+    return this.user.role;
+  }
+
   get uid(): string{
     return this.user.uid || '';
   }
@@ -63,10 +67,17 @@ export class UserService {
 
     })
   }
+
+  saveStorage(token: string, menu: any) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', JSON.stringify(menu));
+  }
   
   logout(){
 
     localStorage.removeItem('token');
+    localStorage.removeItem('menu');
+
     this.auth2.signOut().then(() => {
 
       this.ngZone.run(() => {
@@ -74,6 +85,8 @@ export class UserService {
       })
 
     });
+
+    // TODO: Remove menu
   }
 
   validarToken(): Observable<boolean> {
@@ -87,7 +100,9 @@ export class UserService {
         
         const {email,google,name,role,img = '',uid} = resp.user;
         this.user = new User(name, email,'', img, google,role, uid);
-        localStorage.setItem('token', resp.token);
+
+        this.saveStorage(resp.token, resp.menu);
+
         return true; //if token is generated
       }),
       catchError( error => {
@@ -103,7 +118,9 @@ export class UserService {
     return this.http.post(`${base_url}/users`, formData)
               .pipe(
                 tap( (resp: any) =>{
-                  localStorage.setItem('token', resp.token);
+
+                  this.saveStorage(resp.token, resp.menu);
+
                 })
               )
   }
@@ -124,7 +141,9 @@ export class UserService {
     return this.http.post(`${base_url}/login`, formData)
               .pipe(
                 tap( (resp: any) =>{
-                  localStorage.setItem('token', resp.token);
+
+                  this.saveStorage(resp.token, resp.menu);
+
                 })
               )
   }
@@ -135,7 +154,9 @@ export class UserService {
     return this.http.post(`${base_url}/login/google`, {token})
               .pipe(
                 tap( (resp: any) =>{
-                  localStorage.setItem('token', resp.token);
+
+                  this.saveStorage(resp.token, resp.menu);
+
                 })
               )
   }

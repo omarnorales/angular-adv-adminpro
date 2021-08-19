@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,6 +10,7 @@ import { HospitalService } from '../../../services/hospital.service';
 import { Doctor } from 'src/app/models/doctor.model';
 import { Hospital } from 'src/app/models/hospital.model';
 import { delay } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-doctor',
@@ -41,16 +41,17 @@ export class DoctorComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getHospitals();
-
     this.mainLoad();
 
+    this.getHospitals();
+    
     this.doctorForm.get('hospital').valueChanges
-        .subscribe(hospitalId => {
-          
-          this.selectedHospital = this.hospitals.find( h => h._id === hospitalId )
-
-        })
+    .pipe(
+      delay(200)
+    )
+    .subscribe(hospitalId => {
+      this.selectedHospital = this.hospitals.find( h => h._id === hospitalId )
+    })
 
 
   }
@@ -124,12 +125,12 @@ export class DoctorComponent implements OnInit {
   }
 
   getHospitals(){
-    this.hospitalService.getHospitals()
-    .pipe(
-      delay(100)
-    )
-    .subscribe(hospitals =>{
-      this.hospitals = hospitals;
+     this.hospitalService.getHospitals()
+    // .pipe(
+    //   delay(100)
+    // )
+    .subscribe((resp) => {
+      this.hospitals = resp;
     })
   }
 
